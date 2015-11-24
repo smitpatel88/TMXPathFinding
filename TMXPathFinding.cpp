@@ -1,7 +1,7 @@
 /**
  *
  * Created by Smit Patel on 25/09/2015
- * 
+ *
  * github: https://github.com/smitpatel88/TMXPathFinding
  *
  */
@@ -29,7 +29,7 @@ TMXPathFinding::TMXPathFinding(TMXTiledMap *map, DIRECTION noOfDirection) {
 	inClose = false;
 	tileLayers.clear();
 	setTileLayers( { } );
-	
+
 	extractNode = new TileNode();
 }
 
@@ -73,7 +73,7 @@ int TMXPathFinding::euclideanDistance(TileNode *start, TileNode *end) {
 	int dx = end->getLocation().x - start->getLocation().x;
 	int dy = end->getLocation().y - start->getLocation().y;
 	int ans = sqrt(dx * dx + dy * dy);
-	
+
 	return ans;
 }
 
@@ -132,7 +132,7 @@ std::vector<Vec2> TMXPathFinding::getPath(Vec2 startPos, Vec2 endPos, std::vecto
 				extractNode = extractNode->getParent();
 			}
 			std::reverse(points.begin(), points.end());
-			
+
 			return points;
 		}
 		else {
@@ -176,14 +176,14 @@ std::vector<Vec2> TMXPathFinding::getPath(Vec2 startPos, Vec2 endPos, std::vecto
 						break;
 					case 7: // top-right
 						newNode->setLocX(1);
-						newNode->setLocY(-1);
+						newNode->setLocY(1);
 						break;
-					
+
 				}
 
 				if (newNode->getLocation() != goalNode->getLocation()) {
-					if (newNode->getLocation().x < 0 || newNode->getLocation().y < 0 || 
-						newNode->getLocation().x >= tileMap->getMapSize().width || 
+					if (newNode->getLocation().x < 0 || newNode->getLocation().y < 0 ||
+						newNode->getLocation().x >= tileMap->getMapSize().width ||
 						newNode->getLocation().y >= tileMap->getMapSize().height) {
 						// newNode is invalid, outside tileMap so ignore
 						continue;
@@ -260,7 +260,7 @@ std::vector<Vec2> TMXPathFinding::getPath(Vec2 startPos, Vec2 endPos, std::vecto
 						modifiedNode = newNode;
 						// remove from open
 						open.erase(newNode);
-						
+
 						modifiedNode->setTotalCost(newNode->getTotalCost());
 						// updated node reinsert in open
 						open.emplace(modifiedNode, modifiedNode->getTotalCost());
@@ -274,7 +274,7 @@ std::vector<Vec2> TMXPathFinding::getPath(Vec2 startPos, Vec2 endPos, std::vecto
 		}
 		close.emplace(extractNode, extractNode->getTotalCost());
 	}
-	
+
 	std::vector<Vec2> dummy;
 	return dummy;
 }
