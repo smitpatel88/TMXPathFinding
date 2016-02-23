@@ -69,10 +69,23 @@ std::vector<Vec2> TMXPathFinding::getPathUsingWalkable(Vec2 startPos, Vec2 endPo
 	return getPath(startPos, endPos, walkableGIDs, {});
 }
 
+int TMXPathFinding::getDistance(TileNode *start, TileNode *end) {
+	//return euclideanDistance(start, end);
+	return manhattanDistance(start, end);
+}
+
 int TMXPathFinding::euclideanDistance(TileNode *start, TileNode *end) {
 	int dx = end->getLocation().x - start->getLocation().x;
 	int dy = end->getLocation().y - start->getLocation().y;
 	int ans = sqrt(dx * dx + dy * dy);
+
+	return ans;
+}
+
+int TMXPathFinding::manhattanDistance(TileNode *start, TileNode *end) {
+	int dx = end->getLocation().x - start->getLocation().x;
+	int dy = end->getLocation().y - start->getLocation().y;
+	int ans = abs(dx) + abs(dy);
 
 	return ans;
 }
@@ -93,7 +106,7 @@ std::vector<Vec2> TMXPathFinding::getPath(Vec2 startPos, Vec2 endPos, std::vecto
 	startNode->setCostFromStart(0);
 	startNode->setParent(nullptr);
 
-	int cost = euclideanDistance(startNode, goalNode);
+	int cost = getDistance(startNode, goalNode);
 
 	startNode->setCostToGoal(cost);
 	startNode->setTotalCost();
@@ -218,7 +231,7 @@ std::vector<Vec2> TMXPathFinding::getPath(Vec2 startPos, Vec2 endPos, std::vecto
 						continue;
 				}
 
-				cost = euclideanDistance(newNode, goalNode);
+				cost = getDistance(newNode, goalNode);
 				newNode->setCostFromStart(extractNode->getCostFromStart() + 1);
 				newNode->setCostToGoal(cost);
 				newNode->setParent(extractNode);
