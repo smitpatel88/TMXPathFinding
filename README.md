@@ -49,7 +49,7 @@ How to use?
  if (path.size() == 0)  
 		log("No Path is available...");  
  else {  
-		for (Vec2 tilePos : path  
+		for (Vec2 tilePos : path )
 			log("x: %f  y: %f", tilePos.x, tilePos.y);  
  }  
  
